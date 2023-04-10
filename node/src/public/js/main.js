@@ -1,5 +1,6 @@
 
 function requestNotShownEventsCount() {
+  console.log('requesting not shown events every 30 seconds...');
   return new Promise((resolve) => {
     $.getJSON("/webhooks/new", (data) => {
       const { notShownEventsCount } = data;
@@ -21,5 +22,5 @@ $(document).ready(() => {
     return false;
   });
 
-  setInterval(displayNotShownEventsAlertIfNeed, 10000);
+  setInterval(displayNotShownEventsAlertIfNeed, 30000);
 });

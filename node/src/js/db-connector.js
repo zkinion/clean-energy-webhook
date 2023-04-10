@@ -57,7 +57,7 @@ exports.init = async () => {
         await connection.queryAsync(URLS_TABLE_INIT)
     } catch (e) {
         console.error('DB is not available')
-        console.error(e)
+        console.error(e);
     }
 }
 
@@ -66,6 +66,6 @@ exports.close = async () => {
 }
 
 exports.run = (sql) => {
-    console.log(sql)
+    // console.log(sql)
     return _.isNull(connection) ? Promise.reject(new Error('DB not initialized!')) : connection.queryAsync(sql)
 }
