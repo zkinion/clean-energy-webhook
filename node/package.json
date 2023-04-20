@@ -31,7 +31,8 @@
     "mysql": "^2.17.1",
     "ngrok": "^3.2.5",
     "path": "^0.12.7",
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "sequelize": "^6.31.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.3"
