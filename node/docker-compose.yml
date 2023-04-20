@@ -9,7 +9,8 @@ services:
       driver: none
     tmpfs: "/datalog"
   kafka:
-    image: wurstmeister/kafka:2.12-2.3.0
+    #image: wurstmeister/kafka:2.12-2.3.0
+    image: wurstmeister/kafka
     ports:
       - 9092:9092
     environment:
