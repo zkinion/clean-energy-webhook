@@ -72,7 +72,8 @@ services:
       - ./tools:/app/tools
     ports:
       - 3000:3000
-    command: ./tools/wait-for-it.sh host.docker.internal:3306 -t 60 --strict -- npm run dev
+#    command: ./tools/wait-for-it.sh host.docker.internal:3306 -t 60 --strict -- npm run dev
+    command: npm run dev
     depends_on:
       - kafka
       # - db
