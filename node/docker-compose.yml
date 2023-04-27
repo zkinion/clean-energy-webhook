@@ -2,7 +2,7 @@ version: '2'
 
 services:
   zookeeper:
-    image: zookeeper
+    image: zookeeper:latest
     ports:
       - 2181:2181
     logging:
@@ -11,7 +11,7 @@ services:
   kafka:
     platform: linux/arm64
     #image: wurstmeister/kafka:2.12-2.3.0
-    image: bitnami/kafka:latest
+    image: spotify/kafka:latest
     ports:
       - 9092:9092
     environment:
@@ -20,29 +20,30 @@ services:
       KAFKA_CREATE_TOPICS: "events:1:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       ALLOW_PLAINTEXT_LISTENER: yes
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-#      - ./kafka/data/zookeeper_data:/var/lib/zookeeper/data
-#      - ./kafka/data/zookeeper_log:/var/lib/zookeeper/log
+    #      - ./kafka/data/zookeeper_data:/var/lib/zookeeper/data
+    #      - ./kafka/data/zookeeper_log:/var/lib/zookeeper/log
     depends_on:
       - zookeeper
     logging:
       driver: none
 
-#  db:
-#    image: mysql:8.0
-#    command: mysqld --default-authentication-plugin=mysql_native_password --port=3307
-#    volumes:
-#      - ./db/mysql:/var/lib/mysql
-#    ports:
-#      - 3307:3307
-#    environment:
-#      MYSQL_ROOT_PASSWORD: root
-#      MYSQL_DATABASE: events
-#      MYSQL_USER: events
-#      MYSQL_PASSWORD: events
-#    logging:
-#      driver: none
+  #  db:
+  #    image: mysql:8.0
+  #    command: mysqld --default-authentication-plugin=mysql_native_password --port=3307
+  #    volumes:
+  #      - ./db/mysql:/var/lib/mysql
+  #    ports:
+  #      - 3307:3307
+  #    environment:
+  #      MYSQL_ROOT_PASSWORD: root
+  #      MYSQL_DATABASE: events
+  #      MYSQL_USER: events
+  #      MYSQL_PASSWORD: events
+  #    logging:
+  #      driver: none
 
   webhooks_web:
     env_file:
@@ -51,15 +52,21 @@ services:
       KAFKA_BROKER_LIST: kafka:9092
       KAFKA_GROUP_ID: events
       EVENT_TOPIC: events
-#      MYSQL_HOST: db
-#      MYSQL_DATABASE: events
-#      MYSQL_USER: events
-#      MYSQL_PASSWORD: events
-      MYSQL_HOST: host.docker.internal
-      MYSQL_DATABASE: events
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      #      MYSQL_HOST: db
+      #      MYSQL_DATABASE: events
+      #      MYSQL_USER: events
+      #      MYSQL_PASSWORD: events
+      MYSQL_HOST: "cleanenergy-stack-prod-standardauroradbcluster-4o6wgmea14n0.cluster-cozbfkzshg3k.us-west-2.rds.amazonaws.com"
+      MYSQL_USER: cleanenergy
+      MYSQL_DATABASE: cleanenergy
+      MYSQL_PASSWORD: 8IyrQBdN5XqtuDOl*I66dd@O2CrJvV1j
       MYSQL_PORT: 3306
+
+      #MYSQL_HOST: host.docker.internal
+      #MYSQL_DATABASE: events
+      #MYSQL_USER: root
+      #MYSQL_PASSWORD: root
+      #MYSQL_PORT: 3306
     build:
       context: .
       dockerfile: Dockerfile
@@ -72,7 +79,7 @@ services:
       - ./tools:/app/tools
     ports:
       - 3000:3000
-#    command: ./tools/wait-for-it.sh host.docker.internal:3306 -t 60 --strict -- npm run dev
+    #    command: ./tools/wait-for-it.sh host.docker.internal:3306 -t 60 --strict -- npm run dev
     command: npm run dev
     depends_on:
       - kafka
