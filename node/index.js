@@ -176,7 +176,7 @@ app.use((error, req, res, next) => {
 ;(async () => {
     try {
         await dbConnector.init()
-        await kafkaHelper.init(eventsService.getHandler())
+        // wait kafkaHelper.init(eventsService.getHandler())
         const server = app.listen(PORT, () => {
             console.log(`Listening on port: ${PORT}`)
             return Promise.delay(100)

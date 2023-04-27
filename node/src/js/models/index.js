@@ -5,9 +5,10 @@ const Sequelize = require('sequelize');
 //const AWSXRay = require('aws-xray-sdk');
 
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
+// const env = process.env.NODE_ENV || 'development';
+const env = 'production';
 let configPath;
-if (env == 'development') {
+if (env === 'development') {
     configPath = 'test';
 } else {
     configPath = env;

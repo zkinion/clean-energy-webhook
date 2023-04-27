@@ -1,34 +1,39 @@
 version: '2'
 
 services:
-  zookeeper:
-    image: zookeeper:latest
-    ports:
-      - 2181:2181
-    logging:
-      driver: none
-    tmpfs: "/datalog"
-  kafka:
-    platform: linux/arm64
-    #image: wurstmeister/kafka:2.12-2.3.0
-    image: spotify/kafka:latest
-    ports:
-      - 9092:9092
-    environment:
-      KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_ADVERTISED_PORT: 9092
-      KAFKA_CREATE_TOPICS: "events:1:1"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      ALLOW_PLAINTEXT_LISTENER: yes
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    #      - ./kafka/data/zookeeper_data:/var/lib/zookeeper/data
-    #      - ./kafka/data/zookeeper_log:/var/lib/zookeeper/log
-    depends_on:
-      - zookeeper
-    logging:
-      driver: none
+#  zookeeper:
+#    image: zookeeper:latest
+#    ports:
+#      - 2181:2181
+#    logging:
+#      driver: none
+#    tmpfs: "/datalog"
+#  kafka:
+#    platform: linux/arm64
+#    #image: wurstmeister/kafka:2.12-2.3.0
+#    #image: spotify/kafka
+#    image: bitnami/kafka
+#    ports:
+#      - 9092:9092
+#      - 19093:9093
+#    environment:
+#      KAFKA_ADVERTISED_HOST_NAME: kafka
+#      KAFKA_ADVERTISED_PORT: 9092
+#      #  KAFKA_CREATE_TOPICS: "events:1:1"
+#      # KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#      ALLOW_PLAINTEXT_LISTENER: yes
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+#      CLUSTER_ID: oh-sxaDRTcyAr6pFRbXyzA
+#      BROKER_ID: 1
+#      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    #      - ./kafka/data/zookeeper_data:/var/lib/zookeeper/data
+#    #      - ./kafka/data/zookeeper_log:/var/lib/zookeeper/log
+##    depends_on:
+##      - zookeeper
+#    logging:
+#      driver: none
 
   #  db:
   #    image: mysql:8.0
@@ -81,6 +86,6 @@ services:
       - 3000:3000
     #    command: ./tools/wait-for-it.sh host.docker.internal:3306 -t 60 --strict -- npm run dev
     command: npm run dev
-    depends_on:
-      - kafka
+#    depends_on:
+#      - kafka
       # - db
