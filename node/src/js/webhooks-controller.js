@@ -5,7 +5,7 @@ const db = require('./models/index.js');
 const { Sequelize, Op } = require('sequelize');
 
 const utils = require('./utils')
-const kafkaHelper = require('./kafka-helper')
+// const kafkaHelper = require('./kafka-helper')
 
 const SIGNATURE_HEADER = 'X-HubSpot-Signature'
 const SIGNATURE_VERSION_HEADER = 'X-HubSpot-Signature-Version'
