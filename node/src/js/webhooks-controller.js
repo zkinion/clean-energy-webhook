@@ -15,8 +15,7 @@ exports.getRouter = () => {
     router.post('/', async (req, res) => {
         const events = req.body
 
-        console.log('Received hook events:')
-
+        console.log('Received hook events:');
         try {
             let subscriptionType = events[0].subscriptionType;
             console.warn('subscriptionType: ', subscriptionType);
